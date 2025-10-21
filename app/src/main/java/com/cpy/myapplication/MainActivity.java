@@ -5,25 +5,24 @@ import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.alibaba.dashscope.aigc.generation.GenerationResult;
-import com.cpy.myapplication.model.Message;
-import com.alibaba.dashscope.exception.InputRequiredException;
-import com.alibaba.dashscope.exception.NoApiKeyException;
-import com.cpy.myapplication.adapter.MessageAdapter;
-
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cpy.myapplication.adapter.MessageAdapter;
+import com.cpy.myapplication.model.Message;
+import com.cpy.myapplication.network.BaiLianApi;
+import com.alibaba.dashscope.aigc.generation.GenerationResult;
+import com.alibaba.dashscope.exception.InputRequiredException;
+import com.alibaba.dashscope.exception.NoApiKeyException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
-import com.cpy.myapplication.network.BaiLianApi;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Message> messageList = new ArrayList<>();
+    public List<Message> messageList = new ArrayList<>();
     private MessageAdapter adapter;
     private EditText messageInput;
 
@@ -46,24 +45,27 @@ public class MainActivity extends AppCompatActivity {
             String text = messageInput.getText().toString().trim();
             if (text.isEmpty()) return;
 
+            // 用户消息
             messageList.add(new Message(text, Message.TYPE_USER));
             adapter.notifyItemInserted(messageList.size() - 1);
             recyclerView.scrollToPosition(messageList.size() - 1);
             messageInput.setText("");
-            System.out.println("开始调用api"+text);
+
             // 异步请求阿里百炼
             Executors.newSingleThreadExecutor().execute(() -> {
                 try {
                     GenerationResult result = BaiLianApi.sendMessage(text);
-                    String reply = BaiLianApi.sendMessage(text).getOutput().getChoices().get(0).getMessage().getContent();
-                    System.out.println("调用结果"+reply);
+                    String reply = result.getOutput().getChoices().get(0).getMessage().getContent();
+
+                    mainHandler.post(() -> {
+                        messageList.add(new Message(reply, Message.TYPE_BOT));
+                        adapter.notifyItemInserted(messageList.size() - 1);
+                        recyclerView.scrollToPosition(messageList.size() - 1);
+                    });
                 } catch (NoApiKeyException | InputRequiredException e) {
-                    System.out.println("调用失败");
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
-            }
-            );});
-
+            });
+        });
     }
-
 }
