@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.alibaba.dashscope.aigc.generation.GenerationResult;
 import com.cpy.myapplication.model.Message;
 import com.alibaba.dashscope.exception.InputRequiredException;
 import com.alibaba.dashscope.exception.NoApiKeyException;
@@ -53,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
             // 异步请求阿里百炼
             Executors.newSingleThreadExecutor().execute(() -> {
                 try {
-                    String reply = BaiLianApi.sendMessage(text).getOutput().getText();
+                    GenerationResult result = BaiLianApi.sendMessage(text);
+                    String reply = BaiLianApi.sendMessage(text).getOutput().getChoices().get(0).getMessage().getContent();
                     System.out.println("调用结果"+reply);
                 } catch (NoApiKeyException | InputRequiredException e) {
                     System.out.println("调用失败");
