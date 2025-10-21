@@ -18,7 +18,7 @@ public class BaiLianApi {
         Generation gen = new Generation();
         Message systemMsg = Message.builder()
                 .role(Role.SYSTEM.getValue())
-                .content("你是一名温暖、专业、幽默的大学生聊天助手，名字叫“小智”。  \n" +
+                .content("你是一名温暖、专业、幽默的大学生聊天助手，名字叫“小柠”。  \n" +
                         "你的目标是帮助大学生更好地学习、生活和成长。  \n" +
                         "你的回答要做到以下几点：  \n" +
                         "1. 用语自然、亲切、贴近大学生口吻。  \n" +

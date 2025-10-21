@@ -6,6 +6,19 @@
     android:gravity="start"
     android:padding="5dp">
 
+    <!-- 机器人头像 -->
+    <ImageView
+        android:id="@+id/botAvatar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/bot"
+        android:scaleType="centerCrop"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="6dp"
+        android:background="@drawable/bot"
+        android:clipToOutline="true" />
+
+    <!-- 机器人消息 -->
     <TextView
         android:id="@+id/botMessage"
         android:layout_width="wrap_content"
@@ -13,5 +26,7 @@
         android:background="#E0E0E0"
         android:textColor="#000000"
         android:padding="10dp"
-        android:maxWidth="250dp"/>
+        android:maxWidth="250dp"
+        android:layout_marginTop="4dp"
+        android:backgroundTintMode="src_in"/>
 </LinearLayout>

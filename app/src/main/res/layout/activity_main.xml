@@ -9,7 +9,7 @@
         android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="智能客服"
+        android:text="学习助手-小柠"
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="请输入消息"
-            android:padding="10dp"/>
+            android:padding="10dp"
+            android:inputType="textCapSentences|textMultiLine"
+            android:imeOptions="actionSend"
+            android:scrollHorizontally="false"
+
+            />
 
         <Button
             android:id="@+id/sendButton"
