@@ -17,7 +17,7 @@ public class BaiLianApi {
     // 保存整个对话的消息历史
     private static final List<Message> history = new ArrayList<>();
 
-    // 初始化 system 角色（只添加一次）
+    // 初始化 system 角色
     static {
         Message systemMsg = Message.builder()
                 .role(Role.SYSTEM.getValue())
@@ -26,7 +26,7 @@ public class BaiLianApi {
         history.add(systemMsg);
     }
 
-    // 发送消息方法（带上下文）
+    // 发送消息
     public static GenerationResult sendMessage(String userInput)
             throws NoApiKeyException, InputRequiredException {
 
@@ -45,7 +45,7 @@ public class BaiLianApi {
                 .resultFormat(GenerationParam.ResultFormat.MESSAGE)
                 .build();
 
-        // 调用百炼
+        // 调用百炼模型
         GenerationResult result = gen.call(param);
 
         // 取出回复

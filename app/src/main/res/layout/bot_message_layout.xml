@@ -6,7 +6,7 @@
     android:gravity="start"
     android:padding="5dp">
 
-    <!-- 机器人头像 -->
+    <!-- 头像 -->
     <ImageView
         android:id="@+id/botAvatar"
         android:layout_width="36dp"
@@ -18,7 +18,7 @@
         android:background="@drawable/bot"
         android:clipToOutline="true" />
 
-    <!-- 机器人消息 -->
+    <!-- 消息 -->
     <TextView
         android:id="@+id/botMessage"
         android:layout_width="wrap_content"
