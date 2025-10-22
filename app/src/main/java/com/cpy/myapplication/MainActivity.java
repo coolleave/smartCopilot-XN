@@ -2,6 +2,7 @@ package com.cpy.myapplication;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -40,11 +41,21 @@ public class MainActivity extends AppCompatActivity {
         Button sendButton = findViewById(R.id.sendButton);
         Handler mainHandler = new Handler();
 
+        // 监听回车键发送消息
+        messageInput.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_ENTER
+                    && event.getAction() == KeyEvent.ACTION_DOWN) {
+                sendButton.performClick(); // 模拟点击“发送”按钮
+                return true; // 防止换行
+            }
+            return false;
+        });
+
         sendButton.setOnClickListener(v -> {
             String text = messageInput.getText().toString().trim();
             if (text.isEmpty()) return;
 
-            // 添加用户消息到界面
+            // 添加用户消息
             messageList.add(new Message(text, Message.TYPE_USER));
             adapter.notifyItemInserted(messageList.size() - 1);
             recyclerView.scrollToPosition(messageList.size() - 1);
@@ -54,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
             Executors.newSingleThreadExecutor().execute(() -> {
                 try {
                     GenerationResult result = BaiLianApi.sendMessage(text);
-                    // 获取恢复，只要文字
                     String reply = result.getOutput().getChoices().get(0).getMessage().getContent();
+
                     mainHandler.post(() -> {
                         messageList.add(new Message(reply, Message.TYPE_BOT));
                         adapter.notifyItemInserted(messageList.size() - 1);
