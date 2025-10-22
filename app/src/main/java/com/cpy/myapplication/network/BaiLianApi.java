@@ -21,11 +21,7 @@ public class BaiLianApi {
     static {
         Message systemMsg = Message.builder()
                 .role(Role.SYSTEM.getValue())
-                .content("你是一名温暖、专业、幽默的大学生聊天助手，名字叫“小柠”。\n" +
-                        "你要保持上下文记忆，根据用户的聊天内容延续对话。\n" +
-                        "1. 用语自然亲切，贴近大学生口吻。\n" +
-                        "2. 回答要简短、清晰、重点突出。\n" +
-                        "3. 不要重复上文信息，只需延续对话。")
+                .content(Constants.PROMPT)
                 .build();
         history.add(systemMsg);
     }
@@ -55,13 +51,13 @@ public class BaiLianApi {
         // 取出回复
         Message botMsg = result.getOutput().getChoices().get(0).getMessage();
 
-        // 保存机器人回复到历史
+        // 保存阿里回复到历史
         history.add(botMsg);
 
         return result;
     }
 
-    // 可选：清空聊天记录（如果用户重置对话）
+    // 清空历史，todo
     public static void clearHistory() {
         if (history.size() > 1) {
             Message systemMsg = history.get(0);

@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
             Executors.newSingleThreadExecutor().execute(() -> {
                 try {
                     GenerationResult result = BaiLianApi.sendMessage(text);
+                    // 获取恢复，只要文字
                     String reply = result.getOutput().getChoices().get(0).getMessage().getContent();
-
                     mainHandler.post(() -> {
                         messageList.add(new Message(reply, Message.TYPE_BOT));
                         adapter.notifyItemInserted(messageList.size() - 1);
