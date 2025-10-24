@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        // 获取容器元素，类似js获取dom元素
         RecyclerView recyclerView = findViewById(R.id.messageContainer);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MessageAdapter(messageList);
@@ -69,7 +69,9 @@ public class MainActivity extends AppCompatActivity {
 
                     mainHandler.post(() -> {
                         messageList.add(new Message(reply, Message.TYPE_BOT));
+                        // 通知有消息插入
                         adapter.notifyItemInserted(messageList.size() - 1);
+                        // 滚动到底部
                         recyclerView.scrollToPosition(messageList.size() - 1);
                     });
                 } catch (NoApiKeyException | InputRequiredException e) {

@@ -53,7 +53,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public int getItemCount() {
         return messageList.size();
     }
-
+    // 用户消息
     static class UserMessageViewHolder extends RecyclerView.ViewHolder {
         TextView userMessage;
         public UserMessageViewHolder(View itemView) {
@@ -64,7 +64,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             userMessage.setText(msg.getContent());
         }
     }
-
+    // 系统消息
     static class BotMessageViewHolder extends RecyclerView.ViewHolder {
         TextView botMessage;
         public BotMessageViewHolder(View itemView) {
